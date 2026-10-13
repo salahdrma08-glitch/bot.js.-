@@ -1,21 +1,42 @@
-const config = {
-  botName: "𓆩⃝𝐁𝐨҉𝐭—͟͟͞͞➤〖𝑆𝐴𝐿𝐴𝐻 𝑆𝑇𝐴𝐼𝐹𝐼〗",
-  adminID: "حط_ID_حساب_ADMIN_هنا",
+const CONFIG = {
+  botName: "〖𝑆𝐴𝐿𝐴𝐻 𝑆𝑇𝐴𝐼𝐹𝐼〗𓆩⃝𝐁𝐨҉𝐭—͟͟͞͞➤",
+  adminID: "PUT_ADMIN_ID_HERE",
   prefix: "/"
 };
 
 const commands = {
-  "/مساعدة": "الأوامر المتاحة: /مساعدة ، /بوت",
-  "/بوت": "SALAH STAIFI راهو حاضر ❤️‍🔥"
+  "/help": () => [
+    `🤖 ${CONFIG.botName}`,
+    "",
+    "/help - عرض الأوامر",
+    "/welcome الاسم - ترحيب",
+    "/ban الاسم - رسالة تجريبية",
+    "/leave الاسم - رسالة مغادرة"
+  ].join("\n"),
+
+  "/welcome": name =>
+    `👑 أهلاً وسهلاً ${name || "يا عضو"}! نورت القروب ❤️`,
+
+  "/ban": name =>
+    `⚠️ رسالة تجريبية فقط: ${name || "العضو"} — لم يتم طرد أي شخص.`,
+
+  "/leave": name =>
+    `👋 رسالة مغادرة تجريبية: ${name || "العضو"}.`
 };
 
-function handleCommand(senderID, message) {
-  if (senderID !== config.adminID) {
-    return null;
+function handleCommand(senderID, text) {
+  if (String(senderID) !== CONFIG.adminID) {
+    return "⛔ هذا الأمر مخصص لحساب ADMIN.";
   }
 
-  return commands[message] || null;
+  const [command, ...parts] = text.trim().split(/\s+/);
+  const handler = commands[command];
+
+  if (!handler) return "الأمر غير معروف. اكتب /help";
+  return handler(parts.join(" "));
 }
 
-console.log("SALAH STAIFI - تم تشغيل نظام الأوامر");
-console.log("الأوامر:", Object.keys(commands).join(" ، "));
+console.log(`🤖 ${CONFIG.botName} جاهز`);
+console.log("نظام الأوامر جاهز، لكن Messenger غير مربوط بعد.");
+
+module.exports = { handleCommand };
