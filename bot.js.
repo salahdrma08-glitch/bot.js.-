@@ -1,0 +1,21 @@
+const config = {
+  botName: "SALAH STAIFI",
+  adminID: "حط_ID_حساب_ADMIN_هنا",
+  prefix: "/"
+};
+
+const commands = {
+  "/مساعدة": "الأوامر المتاحة: /مساعدة ، /بوت",
+  "/بوت": "SALAH STAIFI راهو حاضر ❤️‍🔥"
+};
+
+function handleCommand(senderID, message) {
+  if (senderID !== config.adminID) {
+    return null;
+  }
+
+  return commands[message] || null;
+}
+
+console.log("SALAH STAIFI - تم تشغيل نظام الأوامر");
+console.log("الأوامر:", Object.keys(commands).join(" ، "));
